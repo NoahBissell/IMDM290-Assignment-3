@@ -13,19 +13,51 @@ public class AudioSpectrum : MonoBehaviour
     public static int FFTSIZE = 1024; // https://en.wikipedia.org/wiki/Fast_Fourier_transform
     public static float[] samples = new float[FFTSIZE];
     public static float audioAmp = 0f;
+
+    public static int maxFrequency;
+    public static float invMaxFrequency;
+
+    [System.Serializable]
+    public struct FrequencyRange
+    {
+        public float min;
+        public float max;
+    }
+    
     void Start()
     {
-        source = GetComponent<AudioSource>();       
+        source = GetComponent<AudioSource>();
+        maxFrequency = AudioSettings.outputSampleRate / 2;
+        invMaxFrequency = 1.0f / maxFrequency;
     }
     void Update()
     {
         // The source (time domain) transforms into samples in frequency domain 
-        GetComponent<AudioSource>().GetSpectrumData(samples, 0, FFTWindow.Hanning);
+        source.GetSpectrumData(samples, 0, FFTWindow.Hanning);
         // Empty first, and pull down the value.
         audioAmp = 0f;
         for (int i = 0; i < FFTSIZE; i++)
         {
             audioAmp += samples[i];
-        }        
+        }
+        //print(audioAmp);
+    }
+
+    public static float GetAmpInRange(FrequencyRange range)
+    {
+        if (range.max > maxFrequency || range.min < 0)
+        {
+            throw new System.Exception(maxFrequency + "frequency out of range");
+        }
+        
+        float amp = 0;
+        int indexStart = (int)(range.min * invMaxFrequency * FFTSIZE);
+        int indexEnd = (int)(range.max * invMaxFrequency * FFTSIZE);
+        for (int i = indexStart; i < indexEnd; i++)
+        {
+            amp += samples[i];
+        }
+
+        return amp;
     }
 }

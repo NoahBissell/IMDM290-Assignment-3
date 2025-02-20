@@ -10,6 +10,8 @@ public class SwirlingTest : MonoBehaviour
     private GameObject[] particles;
     private Vector3[] velocities;
 
+    public float distanceThreshold;
+
     public GravityBody[] gravityBodies;
 
     public GameObject prefab;
@@ -45,12 +47,14 @@ public class SwirlingTest : MonoBehaviour
             for (int j = 0; j < gravityBodies.Length; j++)
             {
                 Vector3 offset = gravityBodies[j].transform.position - particles[i].transform.position;
-                float sqrDistance = Vector3.SqrMagnitude(offset);
                 
-                Vector3 acceleration = offset.normalized * gravityBodies[j].mass / sqrDistance;
+                float distance = Vector3.Magnitude(offset);
                 
+                Vector3 acceleration = offset.normalized * gravityBodies[j].mass / Mathf.Pow(distance + 1, 2);
+
                 velocities[i] += acceleration;
-            
+                
+
                 particles[i].transform.position += velocities[i] * Time.deltaTime;
             }
             
