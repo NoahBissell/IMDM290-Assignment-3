@@ -154,7 +154,7 @@ MonoBehaviour:
   - frequencyRange:
       min: 0
       max: 20000
-    threshold: 0
+    threshold: 0.03
     OnThreshold:
       m_PersistentCalls:
         m_Calls:
@@ -444,9 +444,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52dafeb0ca8cb470784f71fc0cd81858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 195.6
+  amplitude: 43.8
   frequency: 29.2
-  duration: 1.62
+  duration: 0.3
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
