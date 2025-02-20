@@ -155,8 +155,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -94.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -671,13 +671,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9db46f0788f24fdf99d093fbaf039a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numParticles: 597
-  initialSpeed: 20.29
-  gravityStrength: 0.3
-  spawnRadius: 14.22
+  numParticles: 4808
+  initialSpeed: 20.07
+  spawnRadius: 62.9
   gravityBodies:
-  - {fileID: 1038704704}
-  - {fileID: 1146182381}
+  - transform: {fileID: 1038704704}
+    mass: 45
+  - transform: {fileID: 1146182381}
+    mass: 45
+  prefab: {fileID: 4998159314454350904, guid: 98165b95b48467a43bc16cecaed1b63d, type: 3}
 --- !u!4 &1812961796
 Transform:
   m_ObjectHideFlags: 0
