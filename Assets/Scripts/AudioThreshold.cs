@@ -25,7 +25,7 @@ public class AudioThreshold : MonoBehaviour
             
             if (amp > t.threshold)
             {
-                print("jfkdls;a");
+                
                 t.OnThreshold?.Invoke(t.threshold);
             }
         }
