@@ -32,14 +32,15 @@ public class Ballwave : MonoBehaviour
     void Update()
     {
         float volume = AudioSpectrum.GetAmpInRange(sirenRange);
-        if(Time.time > timer)
+        //if(Time.time > timer)
         {
             timer = Time.time + delay; //changing the delay changes the beat
             for(int i = 0; i < 50; i++)
             {
                 Vector3 pos = Spheres[i].transform.position;
-                pos.y = Mathf.Sin(volume);
-                // pos.y = Mathf.Sin(Time.time - (i * waveSpeed));
+                // pos.y = Mathf.Sin(i * volume * waveSpeed);
+                pos.y = Mathf.Sin(Time.time - (i * volume));
+                //pos.y = Mathf.Sin(volume);
                 Spheres[i].transform.position = pos;
             }
         }
