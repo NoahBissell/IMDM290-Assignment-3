@@ -7,10 +7,13 @@ public class CameraShake : MonoBehaviour
     public float frequency;
     public float duration;
 
+    public float falloff;
+    
     private float shakeTime;
 
     private Vector3 prevOffset;
 
+    
     public void Shake()
     {
         shakeTime = duration;
@@ -19,13 +22,15 @@ public class CameraShake : MonoBehaviour
     private void Update()
     {
         if (shakeTime <= 0) return;
+        
+        Vector3 noise = new Vector3(Mathf.PerlinNoise1D(Time.time * frequency) * 2 - 1, 
+            Mathf.PerlinNoise1D(Time.time * frequency + 1000) * 2 - 1, 
+            Mathf.PerlinNoise1D(Time.time * frequency + 2000) * 2 - 1);
 
-        Vector3 noise = new Vector3(Mathf.PerlinNoise1D(Time.time * frequency), 
-            Mathf.PerlinNoise1D(Time.time * frequency + 100), 
-            Mathf.PerlinNoise1D(Time.time * frequency + 200));
-
-        float envelope = Mathf.Sin(shakeTime / duration * Mathf.PI);
-        Vector3 offset = noise * envelope * amplitude;
+        float t = 1 - shakeTime / duration;
+        //float envelope = Mathf.Sin(t * Mathf.PI);
+        float envelope = Mathf.Exp(-t * falloff) * (1 - t);
+        Vector3 offset = noise * (envelope * amplitude);
         Vector3 delta = offset - prevOffset;
 
         transform.position += delta * Time.deltaTime;
