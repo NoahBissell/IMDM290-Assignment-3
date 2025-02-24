@@ -13,10 +13,10 @@ public class Ballwave : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for(int z = 0; z < 5; z++)
+        for(int z = 0; z < 20; z++)
 
         {
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 30; x++)
                 {
                     GameObject Sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     Sphere.transform.position = new Vector3(x, 0, z);
