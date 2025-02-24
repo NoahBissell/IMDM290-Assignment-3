@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Ballwave : MonoBehaviour
 {
-    public AudioSpectrum.FrequencyRange sirenRange;
+    public SpectrumTracker.FrequencyRange sirenRange;
+    public SpectrumTracker spectrum;
     public float delay = 0.25f; //faked data
     public float timer = 0;
     public float waveSpeed = 0.1f;
@@ -31,7 +32,7 @@ public class Ballwave : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float volume = AudioSpectrum.GetAmpInRange(sirenRange);
+        float volume = spectrum.GetAmpInRange(sirenRange);
         //if(Time.time > timer)
         {
             timer = Time.time + delay; //changing the delay changes the beat
