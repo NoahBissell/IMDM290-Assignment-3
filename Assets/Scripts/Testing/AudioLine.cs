@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class SirenAudio : MonoBehaviour
+public class AudioLine : MonoBehaviour
 {
-    public SpectrumTracker.FrequencyRange sirenRange;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
