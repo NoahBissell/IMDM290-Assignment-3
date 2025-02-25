@@ -15,7 +15,7 @@ public class SpectrumTracker : MonoBehaviour
     AudioSource source;
     public static int FFTSIZE = 1024; // https://en.wikipedia.org/wiki/Fast_Fourier_transform
     public float[] samples;
-    public float audioAmp = 0f;
+    public static float audioAmp = 0f;
 
     public static int maxFrequency;
     public static float invMaxFrequency;

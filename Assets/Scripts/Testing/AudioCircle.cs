@@ -7,6 +7,8 @@ public class AudioCircle : MonoBehaviour
     GameObject[] spheres;
     static int numSphere = 200; 
     float time = 0f;
+    public SpectrumTracker tracker;
+    public SpectrumTracker.FrequencyRange range;
     Vector3[] initPos;
     Vector3[] startPosition, endPosition;
     float lerpFraction; // Lerp point between 0~1
@@ -66,7 +68,7 @@ public class AudioCircle : MonoBehaviour
         // Measure Time 
         // Time.deltaTime = The interval in seconds from the last frame to the current one
         // but what if time flows according to the music's amplitude?
-        time += Time.deltaTime * AudioSpectrum.audioAmp; 
+        time += Time.deltaTime * SpectrumTracker.audioAmp; 
         // what to update over time?
         for (int i =0; i < numSphere; i++){
             // Lerp : Linearly interpolates between two points.
@@ -80,18 +82,19 @@ public class AudioCircle : MonoBehaviour
             //t = i* 2 * Mathf.PI / numSphere;
             spheres[i].transform.RotateAround(mother.transform.position, Vector3.forward, angle);
             //spheres[i].transform.position = Vector3.Lerp(startPosition[i], endPosition[i], lerpFraction);
-            float scale = 1f + AudioSpectrum.audioAmp;
+            float scale = 1f + SpectrumTracker.audioAmp;
             //spheres[i].transform.localScale = new Vector3(scale, 1f, 1f);
             //spheres[i].transform.Rotate(AudioSpectrum.audioAmp, 1f, 1f);
 
             //spheres[i].transform.localScale = new Vector3(Random.Range(0.3f, 0.5f), Random.Range(0.3f, 0.5f), Random.Range(0.3f, 0.5f));
-            spheres[i].transform.localScale = new Vector3(AudioSpectrum.audioAmp, AudioSpectrum.audioAmp, Random.Range(0.3f, 0.5f));
+            spheres[i].transform.localScale = new Vector3(SpectrumTracker.audioAmp, SpectrumTracker.audioAmp, Random.Range(0.3f, 0.5f));
             
             //Color Update over time
-            //Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
-            //float hue = (float)i / numSphere; // Hue cycles through 0 to 1
-            //Color color = Color.HSVToRGB(Mathf.Abs(Mathf.Cos(time)), Mathf.Cos(AudioSpectrum.audioAmp / 10f), 2f + Mathf.Cos(time)); // Full saturation and brightness
-            //sphereRenderer.material.color = color;
+            Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
+            float hue = (float)i / numSphere; // Hue cycles through 0 to 1
+            Color color = Color.HSVToRGB(Mathf.Abs(Mathf.Cos(time)), Mathf.Cos(AudioSpectrum.audioAmp / 10f), 2f + Mathf.Cos(time));
+            // Full saturation and brightness
+            sphereRenderer.material.color = color;
         }
 
     }

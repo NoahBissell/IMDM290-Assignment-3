@@ -150,6 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cabcbf881a46d429f4b91ba95595f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tracker: {fileID: 0}
+  range:
+    min: 0
+    max: 20000
   orbitSpeed: 3
   orbitRadius: 3
 --- !u!82 &48688438
@@ -273,9 +277,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 48688436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621f482545d60c844a9dd3a6e187b928, type: 3}
+  m_Script: {fileID: 11500000, guid: b4d0a69fbada00341b7fd17e9dd85a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  samples: []
 --- !u!1 &126280246
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +328,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126280246}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -936,15 +941,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9db46f0788f24fdf99d093fbaf039a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSpawnStart: 0
   numParticles: 597
   initialSpeed: 20.29
+  gravityConstant: 0
   spawnRadius: 14.22
-  distanceThreshold: 0
+  spawnSphereRadius: 0
   gravityBodies:
-  - transform: {fileID: 0}
-    mass: 0
-  - transform: {fileID: 0}
-    mass: 0
+  - {fileID: 0}
+  - {fileID: 0}
   prefab: {fileID: 0}
 --- !u!4 &1812961796
 Transform:
