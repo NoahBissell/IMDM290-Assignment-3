@@ -587,7 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52dafeb0ca8cb470784f71fc0cd81858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 21.5
+  amplitude: 38
   frequency: 25.7
   duration: 0.3
   falloff: 7.96
@@ -957,7 +957,7 @@ Transform:
   m_GameObject: {fileID: 617498182}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1378,7 +1378,7 @@ MonoBehaviour:
   triggers:
   - frequencyRange:
       min: 0
-      max: 1000
+      max: 300
     smoothing: 0.01
     threshold: 0.03
     OnThreshold:
@@ -1779,7 +1779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTime: 0
-  particles: {fileID: 0}
+  particles: {fileID: 1812961795}
   StageStartTimes:
   - 0
   - 64

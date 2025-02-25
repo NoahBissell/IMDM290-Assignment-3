@@ -1,6 +1,7 @@
 using System;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MusicController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class MusicController : MonoBehaviour
     public float[] StageStartTimes = new float[]
     {
         0,
-        64,
+        65,
         84,
         133
     };
@@ -45,14 +46,13 @@ public class MusicController : MonoBehaviour
         MusicTime = startTime;
     }
     
-    private void Update()
+    private void FixedUpdate()
     {
-        MusicTime += Time.deltaTime;
+        MusicTime += Time.fixedDeltaTime;
         
         MusicStage lastStage = Stage;
-        bool justTransitioned = lastStage != Stage;
         Stage = CalculateStage();
-        
+        bool justTransitioned = lastStage != Stage;
 
         if (Stage == MusicStage.Exposition)
         {
@@ -62,16 +62,38 @@ public class MusicController : MonoBehaviour
         {
             if (justTransitioned)
             {
-                
+                particles.DeleteParticles();
+                particles.transform.position = Vector3.zero;
+                particles.Spawn(3000, 10f, 15, 
+                    (radius) =>
+                    {
+                        Vector2 r = Random.insideUnitCircle * radius;
+                        return new Vector3(r.x, 0, r.y);
+                    }, 
+                    (pos) => pos.normalized);
             }
         }
         else if (Stage == MusicStage.Climax)
         {
-            
+            if (justTransitioned)
+            {
+                particles.DeleteParticles();
+                particles.transform.position = Vector3.zero;
+                particles.Spawn(3000, 10f, 15, 
+                    (radius) =>
+                    {
+                        Vector2 r = Random.insideUnitCircle * radius;
+                        return new Vector3(r.x, 0, r.y);
+                    }, 
+                    (pos) => pos.normalized);
+            }
         }
         else if(Stage == MusicStage.Resolution)
         {
-            
+            if (justTransitioned)
+            {
+                particles.DeleteParticles();
+            }
         }
     }
 

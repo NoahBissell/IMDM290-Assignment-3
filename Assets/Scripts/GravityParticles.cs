@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GravityParticles : MonoBehaviour
 {
@@ -58,6 +60,19 @@ public class GravityParticles : MonoBehaviour
     public void SetSpawnerPosition(Vector3 p)
     {
         transform.position = p;
+    }
+
+    public void DeleteParticles()
+    {
+        for (int i = particles.Length - 1; i >= 0; i--)
+        {
+            Destroy(particles[i].gameObject);
+        }
+
+        numParticles = 0;
+        
+        particles = Array.Empty<GameObject>();
+        velocities = Array.Empty<Vector3>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
