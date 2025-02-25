@@ -7,7 +7,7 @@ public class GravityParticles : MonoBehaviour
     public bool defaultSpawnStart;
     public int numParticles;
     public float initialSpeed;
-
+    public Vector3 initialDir;
     public float gravityConstant;
     
     public float spawnRadius;
@@ -32,8 +32,8 @@ public class GravityParticles : MonoBehaviour
         if (defaultSpawnStart)
         {
             Spawn(numParticles, spawnRadius, initialSpeed, 
-                (rad) => Random.insideUnitSphere * spawnSphereRadius + Vector3.right * rad, 
-                (pos) => Vector3.forward);
+                (rad) => Random.insideUnitSphere * spawnSphereRadius, 
+                (pos) => initialDir);
         }
 
         CalculateNormalizedMasses();
@@ -64,13 +64,12 @@ public class GravityParticles : MonoBehaviour
 
     public void DeleteParticles()
     {
-        for (int i = particles.Length - 1; i >= 0; i--)
+        for (int i = 0; i < particles.Length; i++)
         {
             Destroy(particles[i].gameObject);
         }
 
         numParticles = 0;
-        
         particles = Array.Empty<GameObject>();
         velocities = Array.Empty<Vector3>();
     }

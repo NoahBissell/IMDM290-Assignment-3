@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(SpectrumTracker))]
 public class AudioThreshold : MonoBehaviour
 {
-    public ThresholdTrigger[] triggers;
+    public List<ThresholdTrigger> triggers;
     SpectrumTracker spectrum;
 
     [System.Serializable]
@@ -28,7 +29,7 @@ public class AudioThreshold : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int tIndex = 0; tIndex < triggers.Length; tIndex++)
+        for (int tIndex = 0; tIndex < triggers.Count; tIndex++)
         {
             ThresholdTrigger t = triggers[tIndex];
 
@@ -36,6 +37,7 @@ public class AudioThreshold : MonoBehaviour
             
             if (amp > t.threshold && t.currentAmp < t.threshold)
             {
+                //print("?????:");
                 t.OnThreshold?.Invoke(amp - t.threshold);
             }
 

@@ -1,5 +1,5 @@
-using System;
-using UnityEditor.SceneManagement;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,10 +8,19 @@ public class MusicController : MonoBehaviour
     public static MusicController Instance { get; private set; }
 
     public float startTime;
+
+    public float explodeSpeed;
     
     public static float MusicTime;
     public static MusicStage Stage;
-    public GravityParticles particles;
+    public static float StagePercent;
+    public GravityParticles particles1;
+    public GravityParticles particles2;
+    
+
+    public AudioSource[] audioSources;
+
+    private bool readyToExplode = false;
 
     public float[] StageStartTimes = new float[]
     {
@@ -44,6 +53,13 @@ public class MusicController : MonoBehaviour
     private void Start()
     {
         MusicTime = startTime;
+        CalculateStage();
+
+        for (int i = 0; i < audioSources.Length; i++)
+        {
+            audioSources[i].time = startTime;
+        }
+        
     }
     
     private void FixedUpdate()
@@ -52,49 +68,72 @@ public class MusicController : MonoBehaviour
         
         MusicStage lastStage = Stage;
         Stage = CalculateStage();
+        
         bool justTransitioned = lastStage != Stage;
 
         if (Stage == MusicStage.Exposition)
         {
-            
+            BodyManager.GravityConstant += .001f;
         }
         else if (Stage == MusicStage.Development)
         {
             if (justTransitioned)
             {
-                particles.DeleteParticles();
-                particles.transform.position = Vector3.zero;
-                particles.Spawn(3000, 10f, 15, 
-                    (radius) =>
-                    {
-                        Vector2 r = Random.insideUnitCircle * radius;
-                        return new Vector3(r.x, 0, r.y);
-                    }, 
-                    (pos) => pos.normalized);
+                StartCoroutine(ShrinkAnimation(particles1.transform, .7f));
+                
+                readyToExplode = true;
             }
         }
         else if (Stage == MusicStage.Climax)
         {
             if (justTransitioned)
             {
-                particles.DeleteParticles();
-                particles.transform.position = Vector3.zero;
-                particles.Spawn(3000, 10f, 15, 
-                    (radius) =>
-                    {
-                        Vector2 r = Random.insideUnitCircle * radius;
-                        return new Vector3(r.x, 0, r.y);
-                    }, 
-                    (pos) => pos.normalized);
+                
+                readyToExplode = true;
             }
         }
         else if(Stage == MusicStage.Resolution)
         {
             if (justTransitioned)
             {
-                particles.DeleteParticles();
+                StartCoroutine(ShrinkAnimation(particles1.transform, 1f));
+                StartCoroutine(ShrinkAnimation(particles2.transform, 1f));
+
             }
         }
+    }
+
+    public void Explosion()
+    {
+        if (!readyToExplode) return;
+        particles1.transform.localScale = Vector3.one;
+        particles1.DeleteParticles();
+        particles1.transform.position = Vector3.zero;
+        particles1.Spawn(2000, 5f, explodeSpeed, 
+            (radius) =>
+            {
+                Vector2 r = Random.insideUnitCircle * radius;
+                return new Vector3(r.x, r.y, 0);
+            }, 
+            (pos) => Vector3.Cross(pos.normalized, Vector3.forward));
+
+        readyToExplode = false;
+    }
+
+    IEnumerator ShrinkAnimation(Transform trans, float t)
+    {
+        Vector3 initialPosition = trans.position;
+        Vector3 initialScale = trans.localScale;
+        while (t >= 0)
+        {
+            trans.position = initialPosition * t;
+            trans.localScale = initialScale * t;
+            
+            t-= Time.deltaTime;
+            yield return null;
+        }
+
+        trans.localScale = Vector3.zero;
     }
 
     MusicStage CalculateStage()
@@ -103,10 +142,13 @@ public class MusicController : MonoBehaviour
         {
             if (MusicTime >= StageStartTimes[i])
             {
+                
                 return (MusicStage)i;
             }
         }
 
         return MusicStage.Exposition;
     }
+
+    
 }
