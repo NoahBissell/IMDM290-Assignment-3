@@ -36,7 +36,7 @@ public class Ballwave : MonoBehaviour
         //if(Time.time > timer)
         {
             timer = Time.time + delay; //changing the delay changes the beat
-            for(int i = 0; i < 50; i++)
+            for(int i = 0; i < 600; i++)
             {
                 Vector3 pos = Spheres[i].transform.position;
                 // pos.y = Mathf.Sin(i * volume * waveSpeed);
